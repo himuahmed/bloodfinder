@@ -1,0 +1,21 @@
+
+<form [formGroup]="loginForm"  (ngSubmit)="login()" class="example-form mt-20">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Username/Email</mat-label>
+    <input type="text" matInput [formControl]="loginForm.get('EmailOrUsername')" placeholder="">
+    <mat-error *ngIf="loginForm.get('EmailOrUsername').touched && loginForm.get('EmailOrUsername').hasError('required')">
+      Email is <strong>required.</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput [formControl]="loginForm.get('password')" placeholder="">
+    <mat-error *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('required')">
+      Email is <strong>required.</strong>
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button [disabled]="!loginForm.valid" type="submit" ngCl color="primary">Login</button>
+</form>
+
+

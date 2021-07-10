@@ -1,0 +1,195 @@
+<mat-progress-bar class="mt-20" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+  <div  fxFlex="100" fxLayout="row" fxLayout.xs="row" fxLayoutAlign="center center">
+    <mat-card fxFlex="40" fxFlex.sm="80" fxFlex.xs="95" fxFlex.md="60" class="profile-card">  
+      <mat-card-content fxLayout="column" fxLayout.xs="column">
+        <div class="mb-20" fxFlex="100" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-around none">
+          <ngx-avatar  size="150" name="{{person?.fullName}}"></ngx-avatar>  
+        </div>
+        <div class="mb-20" fxFlex="100" fxLayout="row" fxLayoutAlign="space-around none">
+          <mat-button-toggle-group fxFlex="100" fxLayout="row" fxLayout.xs="column"  aria-label="Font Style">
+
+            <mat-button-toggle *ngIf="!isEdit && hasPersonDetails" (click)="isEdit = !isEdit" fxFlex="50" fxFlex.xs="100" value="bold" color="warn">
+              <mat-icon  aria-hidden="false" class="mr-10">edit</mat-icon>
+              <span>Update Information</span>
+            </mat-button-toggle>
+
+            <mat-button-toggle *ngIf="isEdit && hasPersonDetails" (click)="isEdit = !isEdit; (profileUpdated) ? getPerson() : ''" fxFlex="50" fxFlex.xs="100" value="bold" color="warn">
+                <mat-icon  aria-hidden="false" class="mr-10">arrow_back</mat-icon>
+                <span>Profile Information</span>
+            </mat-button-toggle>
+
+            <mat-button-toggle disabled fxFlex="50" fxFlex.xs="100" value="italic" color="warn" matTooltip="Photo upload is currently disabled.">
+              <mat-icon aria-hidden="false" class="mr-10">add_a_photo</mat-icon>
+              Update Photo
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <!--START OF PERSON DETAILS -->
+        <div *ngIf="hasPersonDetails && !isEdit"  fxLayout="column" fxLayout.xs="column">
+          <!-- <div class="mb-20" fxFlex="100" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-around none">
+            <ngx-avatar  size="150" name="{{person?.fullName}}"></ngx-avatar>  
+          </div> -->
+          <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="space-around none">
+            <div fxFlex="50" fxLayout="row">
+              <mat-icon *ngIf="true" aria-hidden="false" class="mr-10">public</mat-icon> 
+              <mat-icon *ngIf="false" aria-hidden="false" class="mr-10">lock</mat-icon>               
+              <span>
+                <span class="mr-10">Profile visiblity:</span>
+                  <span *ngIf="true" class="font-profile  mr-10">Public</span>
+                  <span *ngIf="false" class="font-profile  mr-10">Private</span>
+              </span>
+            </div>
+            <div fxFlex="50" fxLayout="row">
+              <mat-icon aria-hidden="false" class="mr-10">schedule</mat-icon>              
+              <span>
+                <span class="mr-10">Member since:</span>
+                <span class="font-profile mt-2:">{{person?.createdAt | date}}</span>
+              </span>
+            </div>
+          </div>
+          <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="space-around none">
+            <div fxFlex="50" fxLayout="row">
+              <mat-icon aria-hidden="false" class="mr-10">person</mat-icon>
+              <span>Name:<span  class="font-profile ml-10">{{person?.fullName}}</span></span>
+            </div>
+            <div fxFlex="50" fxLayout="row">
+              <mat-icon aria-hidden="false" class="mr-10">bloodtype</mat-icon>
+              <span>Bloodgroup: <span class="font-bolder font-profile ml-10 color-red">{{person?.bloodGroup}}</span></span>
+            </div>
+          </div>
+          <div class="mt-20" fxFlex="100"  fxLayout="column" fxLayout.xl="row" fxLayoutGap="20px" fxLayoutAlign="space-around none">
+              <div fxFlex="50" fxLayout="row">
+                <mat-icon aria-hidden="false" class="mr-10">email</mat-icon>              
+                <span>
+                  <span class="mr-10">Email:</span>
+                  <span class="font-profile">{{person?.email}}</span>
+                </span>
+              </div>
+              <div fxFlex="50" fxLayout="row">
+                <mat-icon aria-hidden="false" class="mr-10">phone_in_talk</mat-icon>              
+                <span>
+                  <span class="mr-10">Contact no:</span>
+                  <span class="font-profile">{{person?.contactNo}}</span>
+                </span>
+              </div>
+          </div>
+          <div class="mt-20" fxFlex="100" fxLayout="row">
+            <div class="mb-20" fxFlex="100" fxLayout="row">
+              <mat-icon aria-hidden="false" class="mr-10">location_city</mat-icon>              
+              <span>
+                <span class="mr-10">Address:</span>
+                <span class="font-profile mt-2:">{{person?.union + ', '+ person?.division + ', ' + person?.district + ', ' + person?.country +'.'}}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <!--END OF PERSON DETAILS -->
+        <form *ngIf="isEdit" class="example-form" [formGroup]="updatePersonForm" (ngSubmit)="updatePersonDate()">
+        <div *ngIf="hasPersonDetails"  fxLayout="column" fxLayout.xs="column">
+          <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="space-between center">
+            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-form-field class="example-form-field" appearance="fill" >
+                <mat-label>Name</mat-label>
+                <mat-icon matPrefix aria-hidden="false" class="mr-10">person</mat-icon>
+              <!--   <input matInput type="text" name="personName" [(ngModel)]="updatedPersonData.fullName" value="{{person.fullName}}"> -->
+                <input type="text" matInput [formControl]="updatePersonForm.get('fullName')" placeholder="">    
+                <button *ngIf="updatedPersonData.fullName" matSuffix mat-icon-button aria-label="Clear" (click)="updatedPersonData.fullName=''">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100"> 
+              <mat-form-field class="example-form-field" appearance="fill">
+                <mat-label>Blood group</mat-label>
+                <mat-icon matPrefix aria-hidden="false" class="mr-10">bloodtype</mat-icon>
+                <!-- <mat-select [(ngModel)]="person.bloodGroup" name="bloodGroup" value="{{person.bloodGroup}}" > -->
+                  <mat-select [formControl]="updatePersonForm.get('bloodGroup')" value="{{person.bloodGroup}}" >
+                  <mat-option *ngFor="let bloodGroup of bloodGroupList" [value]="bloodGroup.value">
+                    {{bloodGroup.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="space-between center">
+            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-form-field class="example-form-field" appearance="fill" >
+                <mat-label>Email</mat-label>
+                <mat-icon matPrefix aria-hidden="false" class="mr-10">email</mat-icon>
+                <!-- <input disabled matInput type="email" [(ngModel)]="person.email" value="{{person.email}}"> -->
+                <input type="text" matInput value="{{person.email}}" placeholder="" disabled>    
+              </mat-form-field>
+            </div>
+            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100"> 
+              <mat-form-field class="example-form-field" appearance="fill">
+                <mat-label>Contact no</mat-label>             
+                <mat-icon matPrefix aria-hidden="false" class="mr-10">phone_in_talk</mat-icon>        
+                <!-- <input type="tel" matInput [(ngModel)]="person.contactNo" value="{{person.contactNo}}" maxlength="11" minlength="11"> -->
+                <input type="text" matInput [formControl]="updatePersonForm.get('contactNo')" placeholder="">    
+                <mat-icon matSuffix>mode_edit</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="space-between center">
+
+            <div fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-form-field class="example-form-field" appearance="fill" >
+                <mat-label>Division</mat-label>
+                <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
+                  <mat-select  [formControl]="updatePersonForm.get('division')">
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let division of divisions" [value]="division.name">{{division.name + " ( " + division.bn_name + " )"}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-form-field class="example-form-field" appearance="fill" >
+                <mat-label>District</mat-label>
+                <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
+                  <mat-select [formControl]="updatePersonForm.get('district')" value="{{person.district}}">
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let district of districts" [value]="district.name">{{district.name + " ( " + district.bn_name + " )"}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-form-field class="example-form-field" appearance="fill" >
+                <mat-label>Upazila</mat-label>
+                <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
+                <mat-select [formControl]="updatePersonForm.get('union')" value="{{person.union}}">
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let upazila of upazila" [value]="upazila.name">{{upazila.name + " ( " + upazila.bn_name + " )"}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+                
+
+              <!-- Area/Village selectbox in case  mind changes -->
+<!--             <div fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-form-field class="example-form-field" appearance="fill" >
+                <mat-label>Union</mat-label>
+                <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}">
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let union of union" [value]="union.name">{{union.name + " ( " + union.bn_name + " )"}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div> -->
+          </div>
+        
+        </div>
+
+        <button mat-raised-button type='button'  (click)="updatePersonDate()" color="warn">Save information</button>
+      </form>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+
+
+

@@ -1,0 +1,53 @@
+<div class="mt-20 ml-20" fxFlex="30" fxFlex.xs="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+
+  <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-form-field  appearance="fill" >
+      <mat-label>Division</mat-label>
+      <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
+        <mat-select [disabled]="isDivisionSelected"  [(ngModel)]="selectedDivision" value="selectedDivision" (ngModelChange)="divisionChecked()">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let division of divisions" [value]="division">{{division.name + " ( " + division.bn_name + " )"}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-form-field  appearance="fill" >
+      <mat-label>District</mat-label>
+      <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
+        <mat-select [disabled]="isDistrictChecked"  [(ngModel)]="selectedDistrict" value="selectedDistrict"  (ngModelChange)="districteChecked()">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let district of districts" [value]="district">{{district.name + " ( " + district.bn_name + " )"}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-form-field  appearance="fill" >
+      <mat-label>Upazila</mat-label>
+      <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
+      <mat-select [disabled]="isUpazilaChecked"  [(ngModel)]="selectedUpazila" value="selectedUpazila"  (ngModelChange)="upazilaChecked()">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let upazila of upazila" [value]="upazila">{{upazila.name + " ( " + upazila.bn_name + " )"}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+      
+  <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100"> 
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Blood group</mat-label>
+      <mat-icon matPrefix aria-hidden="false" class="mr-10">bloodtype</mat-icon>
+      <!-- <mat-select [(ngModel)]="person.bloodGroup" name="bloodGroup" value="{{person.bloodGroup}}" > -->
+        <mat-select>
+        <mat-option *ngFor="let bloodGroup of bloodGroupList" [value]="bloodGroup.value">
+          {{bloodGroup.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+</div>
+
+
+
+
