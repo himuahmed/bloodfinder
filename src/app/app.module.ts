@@ -23,6 +23,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import { AllInterceptors } from 'src/interceptors';
 import { AppBloodModule } from './app-blood/app-blood.module';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { AppBloodModule } from './app-blood/app-blood.module';
     MatButtonModule,
     MatDividerModule,
     MatCardModule,
-    AppBloodModule
+    AppBloodModule,
+    MatIconModule
   ],
   providers: [
     AllInterceptors

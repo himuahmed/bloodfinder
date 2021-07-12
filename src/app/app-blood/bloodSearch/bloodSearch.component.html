@@ -1,53 +1,111 @@
-<div class="mt-20 ml-20" fxFlex="30" fxFlex.xs="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+<div fxLayout="column">
+  <div class="mt-20" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutGap.xs="0px"
+  [@bounceInRightOnEnter]>
 
-  <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-    <mat-form-field  appearance="fill" >
-      <mat-label>Division</mat-label>
-      <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
-        <mat-select [disabled]="isDivisionSelected"  [(ngModel)]="selectedDivision" value="selectedDivision" (ngModelChange)="divisionChecked()">
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let division of divisions" [value]="division">{{division.name + " ( " + division.bn_name + " )"}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-    <mat-form-field  appearance="fill" >
-      <mat-label>District</mat-label>
-      <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
-        <mat-select [disabled]="isDistrictChecked"  [(ngModel)]="selectedDistrict" value="selectedDistrict"  (ngModelChange)="districteChecked()">
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let district of districts" [value]="district">{{district.name + " ( " + district.bn_name + " )"}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-    <mat-form-field  appearance="fill" >
-      <mat-label>Upazila</mat-label>
-      <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
-      <mat-select [disabled]="isUpazilaChecked"  [(ngModel)]="selectedUpazila" value="selectedUpazila"  (ngModelChange)="upazilaChecked()">
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let upazila of upazila" [value]="upazila">{{upazila.name + " ( " + upazila.bn_name + " )"}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-      
-  <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100"> 
-    <mat-form-field class="example-form-field" appearance="fill">
-      <mat-label>Blood group</mat-label>
-      <mat-icon matPrefix aria-hidden="false" class="mr-10">bloodtype</mat-icon>
-      <!-- <mat-select [(ngModel)]="person.bloodGroup" name="bloodGroup" value="{{person.bloodGroup}}" > -->
-        <mat-select>
-        <mat-option *ngFor="let bloodGroup of bloodGroupList" [value]="bloodGroup.value">
-          {{bloodGroup.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-form-field class="mat-form-field-custom" appearance="fill" >
+        <mat-label>Division</mat-label>
+        <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
+          <mat-select [disabled]="isDivisionSelected"  [(ngModel)]="selectedDivision" value="selectedDivision" (ngModelChange)="divisionChecked();isFiltered=true;getPersonByDivision(selectedDivision.name)">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let division of divisions" [value]="division">{{division.name + " ( " + division.bn_name + " )"}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   
+    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-form-field class="mat-form-field-custom" appearance="fill" >
+        <mat-label>District</mat-label>
+        <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
+          <mat-select [disabled]="isDistrictChecked"  [(ngModel)]="selectedDistrict" value="selectedDistrict"  (ngModelChange)="districteChecked();isFiltered=true;getPersonByDistrict(selectedDistrict.name)">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let district of districts" [value]="district">{{district.name + " ( " + district.bn_name + " )"}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-form-field class="mat-form-field-custom" appearance="fill" >
+        <mat-label>Upazila</mat-label>
+        <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
+        <mat-select [disabled]="isUpazilaChecked"  [(ngModel)]="selectedUpazila" value="selectedUpazila"  (ngModelChange)="upazilaChecked();isFiltered=true;!this.selectedUpazila ? multiFactorPersonFilter() : getPersonByUpazilla(selectedUpazila.name)">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let upazila of upazila" [value]="upazila">{{upazila.name + " ( " + upazila.bn_name + " )"}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+        
+    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100"> 
+      <mat-form-field class="mat-form-field-custom" appearance="fill">
+        <mat-label>Blood group</mat-label>
+        <mat-icon matPrefix aria-hidden="false" class="mr-10">bloodtype</mat-icon>
+        <!-- <mat-select [(ngModel)]="person.bloodGroup" name="bloodGroup" value="{{person.bloodGroup}}" > -->
+          <mat-select  [(ngModel)]="selectedBloodGroup" (ngModelChange)="multiFactorPersonFilter();isFiltered=true;" name="bloodGroup" >
+          <mat-option *ngFor="let bloodGroup of bloodGroupList" [value]="bloodGroup.value">
+            {{bloodGroup.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="mt-8">  
+        <button  [disabled]="!isFiltered" mat-raised-button color="warn" (click)="resetSearch();">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">restart_alt</mat-icon>
+           Reset Filter
+          </button>
+    </div>
+  </div>
+
+ <!--  Start of table -->
+  <div fxFlex="100" class="data-table mt-20" [@bounceInRightOnEnter] >  
+      <table mat-table [dataSource]="personList" class="example-table" matSort matSortActive="bloodgroup" matSortDisableClear matSortDirection="desc">
+        <!-- Number Column -->
+        <ng-container matColumnDef="bloodgroup">
+          <th mat-header-cell *matHeaderCellDef class="table-header">Blood Group</th>
+          <td mat-cell *matCellDef="let row">{{row.bloodGroup}}</td>
+        </ng-container>
+  
+        <!-- Title Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="table-header">Name</th>
+          <td mat-cell *matCellDef="let row">{{row.fullName}}</td>
+        </ng-container>
+  
+        <!-- State Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef class="table-header">Email</th>
+          <td mat-cell *matCellDef="let row">{{row.email}}</td>
+        </ng-container>
+
+        <!-- contact Column -->
+        <ng-container matColumnDef="contact">
+          <th mat-header-cell *matHeaderCellDef class="table-header">Phone</th>
+          <td mat-cell *matCellDef="let row">{{row.contactNo}}</td>
+        </ng-container>
+
+        <!-- division Column -->
+        <ng-container matColumnDef="division">
+          <th mat-header-cell *matHeaderCellDef class="table-header">Division</th>
+          <td mat-cell *matCellDef="let row">{{row.division}}</td>
+        </ng-container>
+
+        <!-- district Column -->
+        <ng-container matColumnDef="district">
+          <th mat-header-cell *matHeaderCellDef class="table-header">District</th>
+          <td mat-cell *matCellDef="let row">{{row.district}}</td>
+        </ng-container>
+
+        <!-- upazila Column -->
+        <ng-container matColumnDef="upazila">
+          <th mat-header-cell *matHeaderCellDef class="table-header">Upazilla</th>
+          <td mat-cell *matCellDef="let row">{{row.union}}</td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <!-- <mat-paginator [length]="totalPerson" [pageSize]="1"></mat-paginator> -->
+      <mat-paginator [pageSizeOptions]="[1,5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
 </div>
-
-
 
 

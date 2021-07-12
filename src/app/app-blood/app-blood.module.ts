@@ -12,7 +12,10 @@ import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MapComponent } from './map/map.component';
-
+import {MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -26,6 +29,10 @@ import { MapComponent } from './map/map.component';
     MatInputModule,
     MatIconModule,
     FormsModule,  
+    MatTableModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppBloodComponent,

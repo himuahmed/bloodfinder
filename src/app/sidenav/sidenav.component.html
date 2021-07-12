@@ -9,12 +9,25 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div>
-          <button mat-button (click)="logout(drawer)">logout</button>
+          <a mat-button [routerLink]="['/user']" >
+            <mat-icon class="material-icons-outlined mr-10" aria-hidden="false" aria-label="account icon">account_circle</mat-icon>
+            Profile</a>
+        </div>
+        <div>
+          <button mat-button (click)="logout(drawer)">
+            <mat-icon class="material-icons-outlined mr-10" aria-hidden="false" aria-label="logout icon">logout</mat-icon>
+            logout
+          </button>
         </div>
       </mat-expansion-panel>
       <mat-divider class="mt-20"></mat-divider>
     </mat-accordion>
-    
+    <div class="mt-20 ml-20">
+      <a mat-button [routerLink]="['/dashboard']" >
+        <mat-icon class="material-icons-outlined mr-10" aria-hidden="false" aria-label="logout icon">dashboard</mat-icon>
+        Dashboard
+      </a>
+    </div>
   </mat-drawer>
   
   <mat-drawer-content fxFlex="100" fxLayout="column">

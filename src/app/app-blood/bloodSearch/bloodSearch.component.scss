@@ -3,6 +3,35 @@
   }
 
 
-::ng-deep .mat-form-field{
+.mat-form-field-custom{
     min-width: 100% !important;
+} 
+
+::ng-deep .mat-paginator-page-size-label{
+  min-width: 90px !important;
+}
+::ng-deep .mat-paginator {
+  width: 100%;
+  min-width: 700px;
+  background-color: #eeeff4c5;
+}
+
+/* ::ng-deep .mat-select-value{
+  width: 50% !important;
+}
+ */
+
+table {
+  width: 100%;
+  min-width: 700px;
+  background-color: #eeeff4c5;
+}
+
+.table-header{
+  color: red;
+  font-size: small;
+}
+
+.data-table{
+  overflow: auto;
 }
