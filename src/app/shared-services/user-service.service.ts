@@ -22,6 +22,10 @@ export class UserServiceService {
     return this.http.get<Person>(this.baseUrl + 'userandperson/personbyuserid/'+userId);
   }
 
+  getCurrentUser():Observable<Person>{
+    return this.http.get<Person>(this.baseUrl + 'userandperson/getLoggedInUser');
+  }
+
   tokenDecoder()
   {
     const token =  localStorage.getItem('token');
@@ -32,6 +36,10 @@ export class UserServiceService {
   getLoggedinUserId(){
     const decodedToken = this.tokenDecoder()
     return decodedToken["nameid"];
+  }
+
+  addPersonInformation(personData:Person){
+    return this.http.post<Person>(this.baseUrl+ 'userandperson/addPersonData', personData);
   }
 
   updatePersonInformation(personData:Person){

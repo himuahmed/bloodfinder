@@ -16,6 +16,7 @@ import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GlobalChatComponent } from '../global-chat/global-chat.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppBloodComponent,
     BloodGroupsSummeryComponent,
     BloodSearchComponent,
-    MapComponent
+    MapComponent,
+    GlobalChatComponent
   ]
 })
 export class AppBloodModule { }

@@ -33,3 +33,11 @@
 .mat-form-field{
     min-width: 100% !important;
 }
+
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+}
+
+::ng-deep .mat-expansion-panel-header{
+    padding-left: 0px !important;
+}

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { login } from '../interfaces/login';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { signup } from '../interfaces/signup';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class AuthService {
 
   baseUrl = environment.apiUrl;
   loginUrl = 'auth/login';
+  signUpUrl= 'auth/usersignup';
   jwtHelper = new JwtHelperService();
 
 
@@ -26,6 +28,10 @@ login(loginCred: login){
       }
     })
   );
+}
+
+signup(signupCred: signup){
+  return this.http.post(this.baseUrl + this.signUpUrl, signupCred);
 }
 
 isLoggedIn(){

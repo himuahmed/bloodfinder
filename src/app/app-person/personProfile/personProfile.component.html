@@ -1,10 +1,10 @@
 <mat-progress-bar class="mt-20" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
 
-  <div  fxFlex="100" fxLayout="row" fxLayout.xs="row" fxLayoutAlign="center center">
+  <div *ngIf="hasPersonDetails"  fxFlex="100" fxLayout="row" fxLayout.xs="row" fxLayoutAlign="center center">
     <mat-card fxFlex="40" fxFlex.sm="80" fxFlex.xs="95" fxFlex.md="60" class="profile-card">  
       <mat-card-content fxLayout="column" fxLayout.xs="column">
         <div class="mb-20" fxFlex="100" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-around none">
-          <ngx-avatar  size="150" name="{{person?.fullName}}"></ngx-avatar>  
+          <ngx-avatar  size="150" name="{{person?.fullName}}"></ngx-avatar>
         </div>
         <div class="mb-20" fxFlex="100" fxLayout="row" fxLayoutAlign="space-around none">
           <mat-button-toggle-group fxFlex="100" fxLayout="row" fxLayout.xs="column"  aria-label="Font Style">
@@ -36,7 +36,15 @@
               <mat-icon *ngIf="false" aria-hidden="false" class="mr-10">lock</mat-icon>               
               <span>
                 <span class="mr-10">Profile visiblity:</span>
-                  <span *ngIf="true" class="font-profile  mr-10">Public</span>
+                  <span *ngIf="true" class="font-profile  mr-10">
+                    Public
+<!--                     <mat-slide-toggle
+                    class="example-margin"
+                    [color]="sliderColor"
+                    [checked]="true"
+                    [disabled]="false">                 
+                </mat-slide-toggle>   -->
+                  </span>
                   <span *ngIf="false" class="font-profile  mr-10">Private</span>
               </span>
             </div>
@@ -48,25 +56,25 @@
               </span>
             </div>
           </div>
-          <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="space-around none">
-            <div fxFlex="50" fxLayout="row">
+          <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
+            <div fxFlex="100" fxLayout="row">
               <mat-icon aria-hidden="false" class="mr-10">person</mat-icon>
               <span>Name:<span  class="font-profile ml-10">{{person?.fullName}}</span></span>
             </div>
-            <div fxFlex="50" fxLayout="row">
+            <div fxFlex="100" fxLayout="row">
               <mat-icon aria-hidden="false" class="mr-10">bloodtype</mat-icon>
               <span>Bloodgroup: <span class="font-bolder font-profile ml-10 color-red">{{person?.bloodGroup}}</span></span>
             </div>
           </div>
-          <div class="mt-20" fxFlex="100"  fxLayout="column" fxLayout.xl="row" fxLayoutGap="20px" fxLayoutAlign="space-around none">
-              <div fxFlex="50" fxLayout="row">
+          <div class="mt-20" fxFlex="100"  fxLayout="column" fxLayout.xl="row" fxLayoutGap="20px">
+              <div fxFlex="100" fxLayout="row">
                 <mat-icon aria-hidden="false" class="mr-10">email</mat-icon>              
                 <span>
                   <span class="mr-10">Email:</span>
                   <span class="font-profile">{{person?.email}}</span>
                 </span>
               </div>
-              <div fxFlex="50" fxLayout="row">
+              <div fxFlex="100" fxLayout="row">
                 <mat-icon aria-hidden="false" class="mr-10">phone_in_talk</mat-icon>              
                 <span>
                   <span class="mr-10">Contact no:</span>
@@ -83,12 +91,68 @@
               </span>
             </div>
           </div>
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <mat-icon matPrefix aria-hidden="false" class="mr-10">settings</mat-icon>
+                  <span class="mt-2">
+                    Privacy Settings <span class="text-disabled">(Change what people see about you.)</span>
+                  </span>
+                  
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div  fxLayout="column" fxLayoutGap="10px">
+
+               <!-- start of profile privacy -->
+                <div class="font-privacy ml-10" fxFlex="100" fxLayout="row" fxLayoutAlign="space-between">
+                  <div>
+                    Show me on search list.
+                  </div>
+                  <mat-slide-toggle
+                    class="example-margin"                 
+                    [color]="sliderColor"
+                    [checked]="isPublicProfile"
+                    [(ngModel)]="isPublicProfile" 
+                    (ngModelChange)="updateProfilePrivacy(isPublicProfile)">
+                  </mat-slide-toggle>
+                </div>
+                <!-- start of email privacy -->
+                <div class="font-privacy ml-10" fxFlex="100" fxLayout="row" fxLayoutAlign="space-between">
+                  <div>
+                    Anyone can see my email.
+                  </div>
+                  <mat-slide-toggle
+                    class="example-margin"
+                    [color]="sliderColor"
+                    [checked]="person?.emailVisible"
+                    [(ngModel)]="isEmailVisible" 
+                    (ngModelChange)="updateProfilePrivacy(isEmailVisible)">                 
+                  </mat-slide-toggle>
+                </div>
+                <!-- start of contact privacy -->
+                <div class="font-privacy ml-10" fxFlex="100" fxLayout="row" fxLayoutAlign="space-between">
+                  <div>
+                    Anyone can see my contact no.
+                  </div>
+                  <mat-slide-toggle
+                    class="example-margin"
+                    [color]="sliderColor"
+                    [checked]="person?.contactNoVisible"
+                    [(ngModel)]="isContactNoVisible" 
+                    (ngModelChange)="updateProfilePrivacy(isContactNoVisible)">                 
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
         </div>
         <!--END OF PERSON DETAILS -->
         <form *ngIf="isEdit" class="example-form" [formGroup]="updatePersonForm" (ngSubmit)="updatePersonDate()">
         <div *ngIf="hasPersonDetails"  fxLayout="column" fxLayout.xs="column">
           <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
-            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
               <mat-form-field class="example-form-field" appearance="fill" >
                 <mat-label>Name</mat-label>
                 <mat-icon matPrefix aria-hidden="false" class="mr-10">person</mat-icon>
@@ -99,7 +163,7 @@
                 </button>
               </mat-form-field>
             </div>
-            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100"> 
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100"> 
               <mat-form-field class="example-form-field" appearance="fill">
                 <mat-label>Blood group</mat-label>
                 <mat-icon matPrefix aria-hidden="false" class="mr-10">bloodtype</mat-icon>
@@ -113,7 +177,7 @@
             </div>
           </div>
           <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
-            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+            <div fxFlex="100">
               <mat-form-field class="example-form-field" appearance="fill" >
                 <mat-label>Email</mat-label>
                 <mat-icon matPrefix aria-hidden="false" class="mr-10">email</mat-icon>
@@ -121,7 +185,7 @@
                 <input type="text" matInput value="{{person.email}}" placeholder="" disabled>    
               </mat-form-field>
             </div>
-            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100"> 
+            <div fxFlex="100"> 
               <mat-form-field class="example-form-field" appearance="fill">
                 <mat-label>Contact no</mat-label>             
                 <mat-icon matPrefix aria-hidden="false" class="mr-10">phone_in_talk</mat-icon>        
@@ -132,9 +196,9 @@
             </div>
           </div>
 
-          <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
+          <div class="mt-20" fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
 
-            <div fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+            <div fxFlex="100">
               <mat-form-field class="example-form-field" appearance="fill" >
                 <mat-label>Division</mat-label>
                 <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
@@ -145,7 +209,7 @@
               </mat-form-field>
             </div>
 
-            <div fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+            <div fxFlex="100">
               <mat-form-field class="example-form-field" appearance="fill" >
                 <mat-label>District</mat-label>
                 <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
@@ -156,7 +220,7 @@
               </mat-form-field>
             </div>
 
-            <div fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+            <div fxFlex="100">
               <mat-form-field class="example-form-field" appearance="fill" >
                 <mat-label>Upazila</mat-label>
                 <!-- <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}"> -->
@@ -166,23 +230,11 @@
                 </mat-select>
               </mat-form-field>
             </div>
-                
-
-              <!-- Area/Village selectbox in case  mind changes -->
-<!--             <div fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
-              <mat-form-field class="example-form-field" appearance="fill" >
-                <mat-label>Union</mat-label>
-                <mat-select [(ngModel)]="person.bloodGroup" value="{{person.bloodGroup}}">
-                  <mat-option>None</mat-option>
-                  <mat-option *ngFor="let union of union" [value]="union.name">{{union.name + " ( " + union.bn_name + " )"}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div> -->
           </div>
         
         </div>
 
-        <button mat-raised-button type='button'  (click)="updatePersonDate()" color="warn">Save information</button>
+        <button mat-raised-button type='button' [disabled]=" !(updatePersonForm.valid)"  (click)="updatePersonDate()" color="warn">Save information</button>
       </form>
 
       </mat-card-content>

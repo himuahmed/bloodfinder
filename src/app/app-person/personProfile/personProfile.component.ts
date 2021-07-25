@@ -12,6 +12,8 @@ import { Upazila } from 'src/app/global-interfaces/upazila';
 import { bloodGroup } from 'src/app/global-interfaces/bloodGroup';
 import { orderBy as _orderBy, assign as _assign } from 'lodash'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ThemePalette } from '@angular/material/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,7 +27,7 @@ export class PersonProfileComponent implements OnInit,OnDestroy {
   divisionPath = '../../assets/JsonFiles/divisions.json';
   unionsPath = '../../assets/JsonFiles/unions.json';
   upazilasPath = '../../assets/JsonFiles/upazilas.json';
-
+  sliderColor: ThemePalette = 'accent';
   updatePersonForm:FormGroup;
  
   unsubscribe$ = new Subject();
@@ -35,6 +37,9 @@ export class PersonProfileComponent implements OnInit,OnDestroy {
   hasPersonDetails = false;
   isEdit = false;
   profileUpdated = false;
+  isPublicProfile:boolean;
+  isEmailVisible: boolean;
+  isContactNoVisible: boolean;
 
   bloodGroupList: bloodGroup[] = [
     {name: 'A RhD positive (A+)', value:'A+'},
@@ -52,10 +57,18 @@ export class PersonProfileComponent implements OnInit,OnDestroy {
   divisions:Division[];
   upazila:Upazila[];
   union:Union[];
+  isDivisionSelected = false;
+  isDistrictChecked = false;
+  isUpazilaChecked = false;
+  selectedDistrict:District;
+  selectedDivision:Division;
+  selectedUpazila:Upazila;
+  isFiltered = false;
+  isAddressValid = false;
   und = undefined;
 
 
-  constructor(private userService:UserServiceService,readonly snackBar: MatSnackBar, private externalFileReaderService: ExternalFileReaderService,private formBuilder: FormBuilder) { }
+  constructor(private userService:UserServiceService,readonly snackBar: MatSnackBar, private externalFileReaderService: ExternalFileReaderService,private formBuilder: FormBuilder,private router:Router) { }
 
   ngOnInit() {
     this.getPerson();
@@ -79,27 +92,39 @@ export class PersonProfileComponent implements OnInit,OnDestroy {
       union:[this.person?.union, [Validators.required]],
     })
   }
-
+  addressChecked(){
+    if(this.selectedUpazila && this.selectedDistrict && this.selectedDivision){
+      debugger
+     this.isAddressValid = true;
+    }
+  }
   getPerson(){
-    this.userService.getPersonByUserId().pipe(takeUntil(this.unsubscribe$)).subscribe((res:Person)=>{   
+    this.userService.getCurrentUser().pipe(takeUntil(this.unsubscribe$)).subscribe((res:Person)=>{   
       if(res){
+       // this.addressChecked();
         this.person = res;
         console.log(this.person);
         //this.person.createdAt = new Date(Date.parse(res.createdAt)).toString();
         this.isLoading = false; 
         this.hasPersonDetails = true;
         this.selectedBloodGroup = res.bloodGroup;
+        this.isPublicProfile = res.publicProfile;
+        this.isEmailVisible = res.emailVisible;
+        this.isContactNoVisible = res.contactNoVisible;
+        console.log(this.isPublicProfile);
         this.profileUpdated = false;
         this.updatePersonFormMethod();
       }
   },error=>{
     //this.updatePersonFormMethod();
+    //this.router.navigate(['user/add-person-info']);
     this.openSnackBar("Failed to load person details.", "close"); 
   });
   }
 
-  updatePersonDate(){
-    this.updatedPersonData = _assign({},this.person,this.updatePersonForm.value);
+  updatePersonDate(updatedData?:Person){
+
+    (updatedData) ?  this.updatedPersonData = updatedData :  this.updatedPersonData = _assign({},this.person,this.updatePersonForm.value);
     this.userService.updatePersonInformation(this.updatedPersonData).subscribe(res=>{
       if(res){
         this.profileUpdated = true;
@@ -110,6 +135,14 @@ export class PersonProfileComponent implements OnInit,OnDestroy {
     })
     //console.log(this.person);
     //console.log(this.updatedPersonData);
+  }
+  updateProfilePrivacy()
+  {
+    this.person.publicProfile = this.isPublicProfile;
+    this.person.emailVisible = this.isEmailVisible;
+    this.person.contactNoVisible = this.isContactNoVisible;
+    this.updatedPersonData = _assign({},this.person,this.updatePersonForm.value);
+    this.updatePersonDate(this.updatedPersonData);
   }
 
   getAllBdLocations(){

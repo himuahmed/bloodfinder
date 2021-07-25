@@ -30,18 +30,22 @@
     </div>
   </mat-drawer>
   
-  <mat-drawer-content fxFlex="100" fxLayout="column">
-    <div (click)="toggleSideNav(drawer)">
-      <app-toolbar></app-toolbar>
-    </div>
-    <div class="sidenav-content" fxFlex="100">
-<!--       <mat-card class="profile-card">  
-        <mat-card-content fxLayout="column" fxLayout.xs="column"> -->
-            
+  <mat-drawer-content fxFlex="100" fxLayout="row">
+
+      
+
+    <div fxFlex="100" fxLayout="column">
+      <div (click)="toggleSideNav(drawer)">
+        <app-toolbar></app-toolbar>
+      </div>
+     
+      <div class="sidenav-content" fxFlex="100">        
             <router-outlet></router-outlet>
-<!--         </mat-card-content>
-      </mat-card> -->
+      </div>
     </div>
+
+
+    
   </mat-drawer-content>
 
 </mat-drawer-container>

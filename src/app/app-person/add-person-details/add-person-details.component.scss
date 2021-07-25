@@ -1,0 +1,43 @@
+/* .profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+.profile-card{
+    height: auto;
+    //width: 40vw;
+    min-width: 200px;
+    min-height: auto;
+    margin: 10px;
+   }
+   
+   .mat-button-toggle{
+       background-color: #c30e2d !important;
+       color: white !important;
+   }
+   
+   .mat-button-toggle-checked{
+       background-color: #c30e2d !important;
+   }
+   
+   
+   
+   .example-form {
+       min-width: 100% !important;
+     }
+     
+   .example-full-width {
+       min-width: 100% !important;
+   }
+   
+   .mat-form-field{
+       min-width: 100% !important;
+   }
+   
+   .mat-expansion-panel:not([class*='mat-elevation-z']) {
+       box-shadow: none;
+   }
+   
+   ::ng-deep .mat-expansion-panel-header{
+       padding-left: 0px !important;
+   }

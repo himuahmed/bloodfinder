@@ -19,6 +19,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { AllInterceptors } from 'src/interceptors';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { AddPersonDetailsComponent } from './add-person-details/add-person-details.component';
 
 @NgModule({
   imports: [
@@ -39,11 +42,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     MatTooltipModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatExpansionModule
   ],
   declarations: [
     AppPersonComponent,
-    PersonProfileComponent
+    PersonProfileComponent,
+    AddPersonDetailsComponent
   ],
   providers:[
     AllInterceptors

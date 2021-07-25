@@ -1,18 +1,84 @@
-<form class="example-form mt-20">
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Email</mat-label>
-    <input type="email" matInput placeholder="">
-  </mat-form-field>
+<mat-stepper linear #stepper [orientation]="(stepperOrientation | async)!" class="example-form mt-20">
 
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Password</mat-label>
-    <input matInput placeholder="">
-  </mat-form-field>
+  <mat-step [stepControl]="usernameForm" [editable]="true">
+    <ng-template matStepLabel>Fill out  username</ng-template>
+    <form [formGroup]="usernameForm" class="mt-20">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" placeholder="Username">
+        <mat-error *ngIf="usernameForm.get('username').touched && usernameForm.get('username').hasError('required')">
+          Username is <strong>required.</strong>
+        </mat-error>
+        <mat-error *ngIf="usernameForm.get('username').touched && usernameForm.get('username').hasError('minlength')">
+          Minimum length should be <strong>2.</strong>
+        </mat-error>
+        <mat-error *ngIf="usernameForm.get('username').touched && usernameForm.get('username').hasError('maxlength')">
+          Username should not exceeds <strong>30</strong> characters.
+        </mat-error>
+      </mat-form-field> 
+              
+      <button mat-button matStepperNext color="primary" type="button" (click)="setUsername()">
+        <span>Next</span>
+        <mat-icon aria-hidden="false" aria-label="next">navigate_next</mat-icon>
+      </button>
+    </form>
+  </mat-step>
 
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Confirm Password</mat-label>
-    <input matInput placeholder="">
-  </mat-form-field>
-  <button mat-raised-button type="submit" color="primary">Sign Up</button>
-</form>
+  <mat-step [stepControl]="registrationForm" [editable]="true">
+    <ng-template matStepLabel>Other information</ng-template>
+    <form [formGroup]="registrationForm" class="mt-20">
+    
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input type="text" matInput formControlName="email" placeholder="">
+        <mat-error *ngIf="registrationForm.get('email').touched && registrationForm.get('email').hasError('required')">
+          Email is <strong>required.</strong>
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('email').touched && registrationForm.get('email').hasError('email')">
+          Enter a valid email.
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('email').touched && registrationForm.get('email').hasError('minlength')">
+          Minimum length should be <strong>4.</strong>
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('email').touched && registrationForm.get('email').hasError('maxlength')">
+          Email should not exceeds <strong>100</strong> characters.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" placeholder="">
+        <mat-error *ngIf="registrationForm.get('password').touched && registrationForm.get('password').hasError('required')">
+          Password is <strong>required.</strong>
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('password').touched && registrationForm.get('password').hasError('minlength')">
+          Minimum length should be <strong>6.</strong>
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('password').touched && registrationForm.get('password').hasError('maxlength')">
+          Password should not exceeds <strong>40</strong> characters.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Confirm Password</mat-label>
+        <input type="password" matInput formControlName="confirmPassword" placeholder="">
+        <mat-error *ngIf="registrationForm.get('confirmPassword').touched && registrationForm.get('confirmPassword').hasError('required')">
+          Confirm your password.
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('password').touched && registrationForm.get('password').hasError('minlength')">
+          Minimum length should be <strong>6.</strong>
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('password').touched && registrationForm.get('password').hasError('maxlength')">
+          Password should not exceeds <strong>40</strong> characters.
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button [disabled]="!registrationForm.valid" (click)="signUp(stepper);" type="button" ngCl color="primary">Sign up</button>
+      <button mat-button matStepperPrevious color="primary">
+        <mat-icon aria-hidden="false" aria-label="next">navigate_before</mat-icon>
+        <span>Back</span>
+      </button>
+    </form>
+  </mat-step>
+  </mat-stepper>
 

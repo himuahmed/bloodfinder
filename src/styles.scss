@@ -12,6 +12,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mt-2{
     margin-top: 2px;
 }
+.mt-5{
+    margin-top: 5px;
+}
 .mb-20{
     margin-bottom: 20px;
 }
@@ -43,6 +46,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color:#6d7074;
 }
 
+.font-privacy{
+    margin-top:10px !important;
+    font-size: 0.9rem!important;
+    font-weight: 400;
+    //color:#4b525a;
+    color:#6d7074;
+}
+
 .font-bolder{
     font-weight: bolder;
 }
@@ -54,3 +65,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .color-red{
     color: red !important;
 }
+
+.text-disabled{
+    color: #6d7074;
+}
+

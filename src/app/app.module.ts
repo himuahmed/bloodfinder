@@ -25,12 +25,15 @@ import { AllInterceptors } from 'src/interceptors';
 import { AppBloodModule } from './app-blood/app-blood.module';
 import { MatIconModule } from '@angular/material/icon';
 
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
-  declarations: [			
+  declarations: [				
     AppComponent,
       ToolbarComponent,
       SidenavComponent,
+      
    ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -50,7 +53,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatDividerModule,
     MatCardModule,
     AppBloodModule,
-    MatIconModule
+    MatIconModule,
+    FormsModule
   ],
   providers: [
     AllInterceptors

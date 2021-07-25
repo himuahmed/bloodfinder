@@ -11,4 +11,7 @@ export interface Person {
     personId?: string;
     userId?: string;
     createdAt?: string;
+    publicProfile?:boolean;
+    contactNoVisible?:boolean;
+    emailVisible?:boolean;
 }

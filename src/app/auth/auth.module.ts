@@ -12,6 +12,8 @@ import { AuthRoutes } from './auth.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -25,7 +27,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatStepperModule,
+    MatIconModule
   ],
   declarations: [
     AuthComponent,

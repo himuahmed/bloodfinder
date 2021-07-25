@@ -63,7 +63,6 @@ export class BloodSearchComponent implements OnInit,OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-
   constructor(private externalFileReaderService:ExternalFileReaderService, private bloodSearchService: BloodsearchService,readonly snackBar: MatSnackBar) { }
   //AIzaSyA3tHeCwkt4eXWSAHxWFpx2KzgVfIXfhQE
   ngOnInit() {
