@@ -15,7 +15,7 @@ export class AuthService {
   loginUrl = 'auth/login';
   signUpUrl= 'auth/usersignup';
   jwtHelper = new JwtHelperService();
-
+  userLoggedIn:boolean = false;
 
 constructor(private http:HttpClient) { }
 
@@ -36,7 +36,9 @@ signup(signupCred: signup){
 
 isLoggedIn(){
   const token = localStorage.getItem('token');
-  return !this.jwtHelper.isTokenExpired(token);
+  this.userLoggedIn =  !this.jwtHelper.isTokenExpired(token)
+  //return !this.jwtHelper.isTokenExpired(token);
+  return this.userLoggedIn;
 }
 
 logOut(){

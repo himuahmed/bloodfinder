@@ -17,7 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalChatComponent } from '../global-chat/global-chat.component';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -33,7 +33,8 @@ import { GlobalChatComponent } from '../global-chat/global-chat.component';
     MatTableModule,
     MatPaginatorModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     AppBloodComponent,

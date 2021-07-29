@@ -1,5 +1,5 @@
 <div fxLayout="column">
-  <div class="mt-20">
+  <div>
     <app-global-chat></app-global-chat>
   </div>
   <div class="mt-20" fxFlex="100"  fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutGap.xs="0px" [@bounceInRightOnEnter]>
@@ -58,7 +58,7 @@
   </div>
 
  <!--  Start of table -->
-  <div fxFlex="100" class="data-table mt-20" [@bounceInRightOnEnter] >  
+  <div fxFlex="100" class="data-table mt-20 mb-20" [@bounceInRightOnEnter] >  
       <table mat-table [dataSource]="personList" class="example-table" matSort matSortActive="bloodgroup" matSortDisableClear matSortDirection="desc">
         <!-- Number Column -->
         <ng-container matColumnDef="bloodgroup">
@@ -106,7 +106,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
       <!-- <mat-paginator [length]="totalPerson" [pageSize]="1"></mat-paginator> -->
-      <mat-paginator [pageSizeOptions]="[1,5, 10, 20]" showFirstLastButtons></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
 

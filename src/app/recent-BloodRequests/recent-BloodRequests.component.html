@@ -1,0 +1,55 @@
+<!-- <div class="demo">
+  <mat-card class="demo">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Shiba Inu</mat-card-title>
+      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+          Need O +blood Need O
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+ -->
+<!-- <div class="demo">
+  <p>
+    JKAGJKGHA AK HAKWD  KJADJK AWD 
+  </p>
+  class="font-smaller"
+</div>
+ -->
+<div class="ml-5 headerButton">
+   Requested blood posts
+</div>
+
+<mat-card class="bloodRequests enable-scrollbar">
+  <mat-list *ngFor="let mObj of bloodReqPosts" class="mb-5">
+      <mat-list-item class="bloodpostHeight">
+        <div>
+          <div class="mb-5 bloodpostTitle">
+            <span><span><b>{{mObj.person.fullName}}</b> &nbsp;</span>requested &nbsp;<span class="color-red"><b>{{mObj.bloodGroup}}</b></span>&nbsp;:</span>
+          </div>
+          <div class="font-smaller">
+            {{mObj.description}}
+          </div>
+          <div mat-line class="font-smallest text-disabled"> {{mObj.createdAt | date}} </div>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+    <mat-card-actions>
+      <div fxLayout="row" fxLayoutAlign="end">
+        <button  mat-mini-fab color="primary" aria-label="Example icon button with a bookmark icon" (click)="openDialog()">
+          <mat-icon>plus_one</mat-icon>
+        </button>
+      </div>
+    </mat-card-actions>
+</mat-card>
+
+

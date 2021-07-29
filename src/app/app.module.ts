@@ -24,16 +24,21 @@ import {MatCardModule} from '@angular/material/card';
 import { AllInterceptors } from 'src/interceptors';
 import { AppBloodModule } from './app-blood/app-blood.module';
 import { MatIconModule } from '@angular/material/icon';
-
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecentBloodRequestsComponent } from './recent-BloodRequests/recent-BloodRequests.component';
+import {MatListModule} from '@angular/material/list';
+import {MatDialogModule} from '@angular/material/dialog';
+import { RequestBloodDialogComponent } from './SharedComponents/request-blood-dialog/request-blood-dialog.component';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
-  declarations: [				
+  declarations: [					
     AppComponent,
       ToolbarComponent,
       SidenavComponent,
-      
+      RecentBloodRequestsComponent,
+      RequestBloodDialogComponent
    ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -54,7 +59,11 @@ import { FormsModule } from '@angular/forms';
     MatCardModule,
     AppBloodModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    MatListModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   providers: [
     AllInterceptors

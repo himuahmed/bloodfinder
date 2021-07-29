@@ -1,20 +1,34 @@
-
-<mat-card>
-  <mat-card-header class="global-chatbox-header">
-    <mat-card-title class="shoutbox-text">Shoutbox</mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="global-chat-box">
-    <div>
-      <ul>
-        <li *ngFor="let mObj of msgInboxArray" [ngClass]="mObj.user === msgDto.user ? 'in-msg' : 'ex-msg'"><span *ngIf="mObj.userId !== msgDto.userId"><b class="chatbox-username">{{mObj.user}} :&nbsp;</b></span><span class="msg-italic-style">{{mObj.message}}</span></li>
-      </ul>
-    </div>
-  </mat-card-content>
-   
-  <mat-card-actions>
-    <div class="global-chat-texbox" fxLayout="row">
-      <input  matInput  type="text"   [(ngModel)]="msgDto.message"  />
-      <button mat-flat-button class="send-btn" color="warn" (click)= "send()"><mat-icon aria-hidden="false" aria-label="Send">send</mat-icon>&nbsp;&nbsp;Send</button>
-    </div>
-  </mat-card-actions>
-</mat-card>
+<div>
+  <mat-card>
+    <mat-card-header class="global-chatbox-header">
+      <mat-card-title class="shoutbox-text">Shoutbox</mat-card-title>
+    </mat-card-header>
+    <mat-card-content  >
+      <div class="global-chat-box"  *ngIf="!failedToLoadMessage && !isLoading"  (scroll)="onScroll($event)" #globalChatScrollBar>
+        <ul *ngIf="msgInboxArray.length > 0 && !failedToLoadMessage">
+          <li *ngFor="let mObj of msgInboxArray" [ngClass]="mObj.userId === currentUserId ? 'in-msg' : 'ex-msg'"><span *ngIf="mObj.userId !==  currentUserId "><span class="chatbox-username">{{mObj.user}} :&nbsp;</span></span><span class="msg-italic-style">{{mObj.message}}</span></li>
+        </ul>
+      </div>
+      <div class="global-chat-box" fxLayoutAlign="center center" *ngIf="isLoading">
+        <mat-spinner
+        
+        [mode]="mode"
+        [value]="value"
+        [diameter]="diameter"
+        >
+      Loading</mat-spinner>
+      </div>
+      <div class="global-chat-box" fxLayoutAlign="center center" *ngIf="msgInboxArray.length === 0 && failedToLoadMessage">
+        <p *ngIf="failedToLoadMessage" class="no-message-found">Unable to get messages. Try again later !</p>
+      </div>
+    </mat-card-content>
+     
+    <mat-card-actions>
+      <div class="global-chat-texbox" fxLayout="row">
+        <input [disabled]='!isLoggedIn'  matInput [placeholder]='!isLoggedIn ? "Log in to send message" : ""'  type="text"   [(ngModel)]="msgDto.message"  />
+        <button [disabled]='!isLoggedIn' mat-flat-button class="send-btn" color="warn" (click)= "send()"><mat-icon aria-hidden="false" aria-label="Send">send</mat-icon>&nbsp;&nbsp;Send</button>
+      </div>
+    </mat-card-actions>
+    
+  </mat-card>
+</div>

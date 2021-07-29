@@ -1,0 +1,36 @@
+<div class="dialog" fxFlex="100">
+  <h1 mat-dialog-title>Request Blood</h1>
+<div mat-dialog-content>
+  <form [formGroup]="bloodReqForm" fxLayout="column">
+    <div   fxLayout="column" fxLayout.xs="column">
+    <div class="mt-20" fxFlex="100" fxLayout="column" fxLayout.xs="column" fxLayoutGap="20px">
+      <div fxLayout="column" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100"> 
+        <label>I'm looking for:</label>
+        <mat-form-field class="example-form-field" appearance="fill">
+          <mat-label>Blood group</mat-label>
+          <mat-icon matPrefix aria-hidden="false" class="mr-10">bloodtype</mat-icon>
+            <mat-select [formControl]="bloodReqForm.get('bloodGroup')">
+            <mat-option *ngFor="let bloodGroup of bloodGroupList" [value]="bloodGroup.value">
+              {{bloodGroup.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+        <label>Details:</label>
+        <mat-form-field class="example-form-field" appearance="fill" >
+          <textarea  type="text" cdkTextareaAutosize matInput [formControl]="bloodReqForm.get('description')" placeholder="" 
+          #autosize="cdkTextareaAutosize"cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10"> 
+           </textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button [mat-dialog-close]="closeDialog" color="primary" (click)="addBloodRequest()">Post</button>
+  <button mat-flat-button [mat-dialog-close]="true" color="warn"  >Cancel</button>
+</div>
+</div>
+

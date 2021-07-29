@@ -37,3 +37,20 @@
 .mat-expansion-panel:not([class*='mat-elevation-z']) {
   box-shadow: none;
 }
+
+
+
+.color-red{
+  background-color: brown;
+}
+
+.color-green{
+ // margin-left: 5px;
+  //background-color: grey;
+  display: block;
+  width: 100%;
+  //width: 90% !important;
+}
+::-webkit-scrollbar{
+display: none;
+}

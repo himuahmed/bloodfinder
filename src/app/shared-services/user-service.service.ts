@@ -12,9 +12,9 @@ export class UserServiceService {
 
   baseUrl = environment.apiUrl;
   jwtHelper = new JwtHelperService()
-    
-
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) {
+   
+   }
 
 
   getPersonByUserId():Observable<Person>{

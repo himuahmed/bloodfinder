@@ -3,13 +3,16 @@ import { environment } from 'src/environments/environment';
 import * as signalR from '@microsoft/signalr';  
 import { GlobalMessage } from '../global-interfaces/globalMessage';
 import { Observable, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { PaginatedResult } from '../global-interfaces/pagination';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalChatServiceService {
   readonly POST_URL = environment.apiUrl + "message/send";
+  readonly FetchGlobalMessage_Url = environment.apiUrl + "message/GetGlobalMessage";
   private  connection: any = new signalR.HubConnectionBuilder().withUrl("https://localhost:44322/MessageHub")   // mapping to the chathub as in startup.cs
   .configureLogging(signalR.LogLevel.Information)
   .build();
@@ -51,5 +54,25 @@ export class GlobalChatServiceService {
   public retrieveMappedObject(): Observable<GlobalMessage> {
     return this.sharedObj.asObservable();
   }
+
+  getGlobalMessages(pageNumber?:number, pageSize?:number): Observable<PaginatedResult<GlobalMessage[]>>{
+    const paginatedResult: PaginatedResult<GlobalMessage[]> = new PaginatedResult<GlobalMessage[]>();
+    let params = new HttpParams;
+
+    if(pageNumber != null && pageSize != null){
+      params = params.append('pageNumber', pageNumber);
+      params = params.append('pageSize', pageSize);
+    }
+    return this.http.get<GlobalMessage[]>(this.FetchGlobalMessage_Url, {observe: 'response', params}).pipe(
+      map(response=>{
+        paginatedResult.result = response.body;
+        if(response.headers.get('paginationheaders') != null){
+          paginatedResult.pagination = JSON.parse(response.headers.get('paginationheaders'));
+        }
+        return paginatedResult;
+      })
+    )
+  }
+  
 
 }

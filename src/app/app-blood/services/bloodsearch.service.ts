@@ -15,6 +15,28 @@ export class BloodsearchService {
 constructor(private http:HttpClient) { }
 
 
+
+getAllBloodDonors(pageNumber?, pageSize?): Observable< PaginatedResult<Person[]>>{
+  const paginatedResult: PaginatedResult<Person[]> = new PaginatedResult<Person[]>(); 
+
+  let params = new HttpParams();
+
+  if(pageNumber != null && pageSize != null){
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', pageSize);
+  }
+
+  return this.http.get<Person[]>(this.baseUrl + 'userandperson/getAllDonors',{observe: 'response', params}).pipe(
+    map(response => {
+        paginatedResult.result = response.body;
+        if(response.headers.get('paginationheaders') != null){
+          paginatedResult.pagination = JSON.parse(response.headers.get('paginationheaders'));
+        }
+        return paginatedResult;
+    })
+  );
+}
+
 getPersonsByBloodGroup(bloodGroup, pageNumber?, pageSize?): Observable< PaginatedResult<Person[]>>{
   const paginatedResult: PaginatedResult<Person[]> = new PaginatedResult<Person[]>(); 
 

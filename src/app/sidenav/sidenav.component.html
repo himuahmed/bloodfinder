@@ -1,10 +1,10 @@
 <mat-drawer-container  class="container" autosize>
 
-  <mat-drawer #drawer class="sidenav" mode="side">
+  <mat-drawer  #drawer class="sidenav" mode="side">
     <mat-accordion>
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header  *ngIf="isLoggedIn">
-          <mat-panel-title >
+          <mat-panel-title fxLayoutAlign="center">
             {{personn?.fullName}}
           </mat-panel-title>
         </mat-expansion-panel-header>
@@ -30,7 +30,7 @@
     </div>
   </mat-drawer>
   
-  <mat-drawer-content fxFlex="100" fxLayout="row">
+  <mat-drawer-content class="overflow-hidden" fxFlex="100" fxLayout="row">
 
       
 
@@ -39,13 +39,17 @@
         <app-toolbar></app-toolbar>
       </div>
      
-      <div class="sidenav-content" fxFlex="100">        
-            <router-outlet></router-outlet>
+      <div class="sidenav-content" fxFlex="100" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">        
+            <div fxFlex="100" class="enable-scrollbar">
+              <router-outlet></router-outlet>
+            </div>
+            <div fxFlex="15"  fxLayout="column" fxLayoutAlign="start center" >
+              <div fxFlex="100" class="mt-20" class="color-green" >
+                <app-recent-BloodRequests ></app-recent-BloodRequests>
+              </div>
+            </div>
       </div>
     </div>
-
-
-    
   </mat-drawer-content>
 
 </mat-drawer-container>

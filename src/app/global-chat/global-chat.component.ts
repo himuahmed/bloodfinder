@@ -1,11 +1,14 @@
-import { NULL_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit } from '@angular/core';
+
+import { Component, OnInit, ViewChild, HostListener, ElementRef  } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { forEach as _forEach, cloneDeep as _cloneDeep } from 'lodash';
 import { Person } from '../app-person/interfaces/person';
-import { AuthService } from '../auth/services/auth.service';
 import { GlobalMessage } from '../global-interfaces/globalMessage';
 import { GlobalChatServiceService } from '../shared-services/global-chatService.service';
 import { UserServiceService } from '../shared-services/user-service.service';
 
+@HostListener('scroll', ['$event'])
 @Component({
   selector: 'app-global-chat',
   templateUrl: './global-chat.component.html',
@@ -13,14 +16,58 @@ import { UserServiceService } from '../shared-services/user-service.service';
 })
 export class GlobalChatComponent implements OnInit {
 
+  @ViewChild('globalChatScrollBar') chatScrollBar: ElementRef;
+
+
   constructor(private chatService: GlobalChatServiceService, private userService:UserServiceService) { }
+
+  //color: ThemePalette = 'rgb(21 119 122 / 90%)';
+  mode: ProgressSpinnerMode = 'indeterminate';
+  value = 50;
+  diameter = 60;
+  //strokeWidth = 0;
+
   msgDto: GlobalMessage = new GlobalMessage();
   msgInboxArray =  [];
+  isLoggedIn = false;
   currentUser: Person
+  currentUserId = '';
+  pageNumber = 1;
+  failedToLoadMessage = false;
+  isLoading = true;
   ngOnInit() {
     this.chatService.retrieveMappedObject().subscribe( (receivedObj: GlobalMessage) => { this.addToInbox(receivedObj);});  // calls the service method to get the new messages sent
-    this.userService.getCurrentUser().subscribe(res=>{this.currentUser = res});
-                                     
+    this.userService.getCurrentUser().subscribe(res=>
+      {
+        this.currentUser = res;
+        this.currentUserId = this.currentUser.userId;
+        this.isLoggedIn = true;
+      });
+    this.getGlobalMessages();
+  }
+  onScroll(event: any){
+    if ( this.chatScrollBar.nativeElement.scrollTop === 0) {
+      console.log("End");
+      this.pageNumber = this.pageNumber+1;
+      this.getGlobalMessages(this.pageNumber,100);
+      
+    }
+  }
+
+  getGlobalMessages(pageNumber?:number, pageSize?:number){
+    this.chatService.getGlobalMessages(pageNumber, pageSize).subscribe(res=>{
+      this.isLoading = false;
+      if(res.result != null){
+        let msgArray = this.msgInboxArray;
+        _forEach(res.result, function(msg){
+          msgArray.unshift(msg);
+        })
+        this.msgInboxArray = msgArray;
+      }
+    },error=>{
+     this.failedToLoadMessage = true;
+     this.isLoading = false;
+    })
   }
 
   send(): void {
@@ -39,20 +86,12 @@ export class GlobalChatComponent implements OnInit {
 
   addToInbox(obj: GlobalMessage) {
     let newObj = obj.user;
-    //let newObj = new GlobalMessage();
-    //newObj.user = obj.user;
-    //newObj.message = obj.message;
-    console.log("this is myobj");
-    console.log(newObj);
     this.msgInboxArray.push(newObj);
     this.resetMsgBox();
   }
 
   resetMsgBox(){
     this.msgDto.message = "";
-
-
   }
-
 
 }

@@ -70,6 +70,7 @@ export class BloodSearchComponent implements OnInit,OnDestroy {
     this.getDistricts();
     this.getDivisions();
     this.getUpazilas();
+    this.getAllBloodDonors();
   }
 
   ngAfterViewInit(): void {
@@ -121,6 +122,15 @@ export class BloodSearchComponent implements OnInit,OnDestroy {
       debugger
       this.getPersonByBloodGroup(this.selectedBloodGroup);
     }
+  }
+
+  getAllBloodDonors(pageNumber?, pageSize?){
+    return this.bloodSearchService.getAllBloodDonors(pageNumber, pageSize).subscribe(res=> {
+     if(res){
+       console.log(res);
+       this.personList.data = res.result;
+     }
+    });
   }
 
   getPersonByBloodGroup(bloodGroup, pageNumber?, pageSize?){

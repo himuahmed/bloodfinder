@@ -19,6 +19,7 @@ export class SidenavComponent implements OnInit {
   constructor(private authService: AuthService, private userService:UserServiceService, private router:Router) { }
 
   ngOnInit() {
+
   }
 
   toggleSideNav(drawer:any){
