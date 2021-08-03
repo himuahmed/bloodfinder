@@ -1,13 +1,13 @@
 # QtagSPA Features
-  -Login/Registartion (Authentication via jwt token) 
-  -Global chat (Shoutbox) for all users (Only logged users can send message).
-  -Private one to message (Live if both users are online)
-  -Blood Search via group or location.
-  -Add/Edit profile.
-  -Edit privacy (Contact/Email) of profile.
+  - Login/Registartion (Authentication via jwt token) 
+  - Global chat (Shoutbox) for all users (Only logged users can send message).
+  - Private one to message (Live if both users are online)
+  - Blood Search via group or location.
+  - Add/Edit profile.
+  - Edit privacy (Contact/Email) of profile.
   -Make forum like post for specific blood group.
 # QtagSPA component Screenshots
-  ![alt text](https://imgur.com/a/PtUKEqz)
+  ![alt text](http://imgur.com/a/PtUKEqz)
 
 ## Development server
 
