@@ -6,8 +6,13 @@
   - Add/Edit profile.
   - Edit privacy (Contact/Email) of profile.
   -Make forum like post for specific blood group.
+  
 # QtagSPA component Screenshots
-  ![alt text](http://imgur.com/a/PtUKEqz)
+  ![Screenshot (3)](https://user-images.githubusercontent.com/34248175/128075659-ff4a27cd-e015-450b-9a22-411333709e3b.png)
+  ![Screenshot (4)](https://user-images.githubusercontent.com/34248175/128075667-f81f2760-46c8-4d38-b70a-8c4cec64fcb8.png)
+  ![Screenshot (5)](https://user-images.githubusercontent.com/34248175/128075676-f18e9a11-2702-401b-9eb8-79d1e4c2fc8a.png)
+  ![Screenshot (6)](https://user-images.githubusercontent.com/34248175/128075692-5ec64fcf-aa4a-411a-a785-6098ed25e6d8.png)
+
 
 ## Development server
 
